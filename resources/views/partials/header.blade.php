@@ -1,5 +1,14 @@
-{{-- Header copied from the lf_design reference project. Included inside
-     layouts/public.blade.php, which already provides <head> and @vite. --}}
+{{-- Header mirroring the live lahorefan.com chrome. Included inside
+     layouts/public.blade.php, which already provides <head> and @vite.
+     Every outbound link comes from config/brand.php. --}}
+@php
+    // Keyed by label so the markup can stay hand-written — the dropdown and the
+    // drawer panels have structure a generic loop would flatten — while still
+    // taking every URL from config rather than hardcoding it here.
+    $nav = collect(config('brand.nav'))->keyBy('label');
+    $social = config('brand.social');
+    $siteUrl = config('brand.site_url');
+@endphp
 <header class="site-header">
         {{-- Top info bar (desktop only) --}}
         <div class="lf-topbar d-none d-xl-block">
@@ -18,9 +27,9 @@
                         </a>
 
                         <div class="lf-social">
-                            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                            <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                            <a href="{{ $social['facebook'] }}" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="{{ $social['instagram'] }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="{{ $social['youtube'] }}" target="_blank" rel="noopener" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
                         </div>
                     </div>
                 </div>
@@ -34,7 +43,7 @@
                 <i class="bi bi-list"></i>
             </button>
 
-            <a href="/" class="lf-logo">
+            <a href="{{ $siteUrl }}" class="lf-logo">
                 <img src="{{ asset('logo.png') }}" alt="Lahore Fan">
             </a>
 
@@ -45,14 +54,14 @@
         <nav class="navbar navbar-expand-xl lf-main-nav d-none d-xl-flex">
             <div class="container-fluid lf-header-inner">
 
-                <a class="navbar-brand lf-logo" href="/">
+                <a class="navbar-brand lf-logo" href="{{ $siteUrl }}">
                     <img src="{{ asset('logo.png') }}" alt="Lahore Fan">
                 </a>
 
                 <div class="lf-nav-wrap">
                     <ul class="navbar-nav lf-nav align-items-xl-center">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/">Home</a>
+                            <a class="nav-link active" href="{{ $nav['Home']['url'] }}">Home</a>
                         </li>
                         <li class="nav-item lf-dropdown">
                             {{-- Like lahorefan.com: Shop is only a hover toggle for the
@@ -64,36 +73,35 @@
                                 Shop <i class="bi bi-chevron-down" style="margin-top: 5px;"></i>
                             </a>
                             <ul class="lf-dropdown-menu">
-                                <li><a href="/ceiling-fans">Ceiling Fans</a></li>
-                                <li><a href="/bracket-fans">Bracket Fans</a></li>
-                                <li><a href="/pedestal-fan">Pedestal Fan</a></li>
-                                <li><a href="/exhaust-fan">Exhaust Fan</a></li>
+                                @foreach ($nav['Shop']['children'] as $child)
+                                    <li><a href="{{ $child['url'] }}">{{ Str::title($child['label']) }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/about">About</a>
+                            <a class="nav-link" href="{{ $nav['About']['url'] }}">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/contact">Contact</a>
+                            <a class="nav-link" href="{{ $nav['Contact']['url'] }}">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/blog">Blog</a>
+                            <a class="nav-link" href="{{ $nav['Blog']['url'] }}">Blog</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/faqs">FAQs</a>
+                            <a class="nav-link" href="{{ $nav['FAQs']['url'] }}">FAQs</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/hybrid-econo-power">Hybrid Econo Power</a>
+                            <a class="nav-link" href="{{ $nav['Hybrid Econo Power']['url'] }}">Hybrid Econo Power</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/conventional-motor">Conventional Motor</a>
+                            <a class="nav-link" href="{{ $nav['Conventional Motor']['url'] }}">Conventional Motor</a>
                         </li>
                     </ul>
                 </div>
 
                 <div class="lf-cta-group">
-                    <a href="/ravian" class="btn btn-lf-solid">Ravian</a>
-                    <a href="/catalogue" class="btn btn-lf-solid">Catalogue</a>
+                    <a href="{{ config('brand.ravian_url') }}" target="_blank" rel="noopener" class="btn btn-lf-solid">Ravian</a>
+                    <a href="{{ config('brand.catalogue_url') }}" target="_blank" rel="noopener" class="btn btn-lf-solid">Catalogue</a>
                 </div>
             </div>
         </nav>
@@ -107,7 +115,7 @@
                     <i class="bi bi-x-lg"></i>
                 </button>
 
-                <a href="/" class="lf-logo" id="mainNavOffcanvasLabel">
+                <a href="{{ $siteUrl }}" class="lf-logo" id="mainNavOffcanvasLabel">
                     <img src="{{ asset('logo.png') }}" alt="Lahore Fan">
                 </a>
 
@@ -120,23 +128,25 @@
                         <div class="lf-drawer-panel">
                             <ul class="lf-drawer-nav list-unstyled mb-0">
                                 <li class="lf-drawer-item active">
-                                    <a href="/">Home</a>
+                                    <a href="{{ $nav['Home']['url'] }}">Home</a>
                                 </li>
                                 <li class="lf-drawer-item">
-                                    <a href="/shop" data-open-panel="shop">Shop <i
+                                    {{-- JS intercepts this to slide the Shop panel in; the
+                                         href is the no-JS fallback. --}}
+                                    <a href="{{ config('brand.shop_url') }}" data-open-panel="shop">Shop <i
                                             class="bi bi-chevron-right"></i></a>
                                 </li>
                                 <li class="lf-drawer-item">
-                                    <a href="/about">About</a>
+                                    <a href="{{ $nav['About']['url'] }}">About</a>
                                 </li>
                                 <li class="lf-drawer-item">
-                                    <a href="/contact">Contact</a>
+                                    <a href="{{ $nav['Contact']['url'] }}">Contact</a>
                                 </li>
                                 <li class="lf-drawer-item">
-                                    <a href="/faqs">FAQs</a>
+                                    <a href="{{ $nav['FAQs']['url'] }}">FAQs</a>
                                 </li>
                                 <li class="lf-drawer-item">
-                                    <a href="/ravian">Ravian</a>
+                                    <a href="{{ config('brand.ravian_url') }}" target="_blank" rel="noopener">Ravian</a>
                                 </li>
                             </ul>
                         </div>
@@ -146,18 +156,11 @@
                                 <i class="bi bi-chevron-left"></i> Back
                             </button>
                             <ul class="lf-drawer-nav list-unstyled mb-0">
-                                <li class="lf-drawer-item">
-                                    <a href="/ceiling-fans">Ceiling Fans</a>
-                                </li>
-                                <li class="lf-drawer-item">
-                                    <a href="/bracket-fans">Bracket Fans</a>
-                                </li>
-                                <li class="lf-drawer-item">
-                                    <a href="/pedestal-fan">Pedestal Fans</a>
-                                </li>
-                                <li class="lf-drawer-item">
-                                    <a href="/exhaust-fan">Exhaust Fans</a>
-                                </li>
+                                @foreach ($nav['Shop']['children'] as $child)
+                                    <li class="lf-drawer-item">
+                                        <a href="{{ $child['url'] }}">{{ Str::title($child['label']) }}</a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -169,7 +172,7 @@
                         <span>HOTLINE <a href="tel:+923041116600">+92 304 111 6600</a></span>
                     </div>
                     <div class="lf-drawer-location">
-                        <a href="https://goo.gl/maps/ZK9WUARk6hoyrmPr8" target="_blank" rel="noopener">Location : 55X7+FF Gujranwala</a>
+                        <a href="{{ config('brand.address_map_url') }}" target="_blank" rel="noopener">Location : 55X7+FF Gujranwala</a>
                     </div>
                 </div>
             </div>

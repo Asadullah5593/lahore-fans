@@ -64,8 +64,17 @@
                                     <article class="store-card cursor-pointer rounded-lg border border-line bg-gray-50 px-4 py-3 leading-snug transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card"
                                              data-store-id="{{ $store['id'] }}" data-lat="{{ $store['lat'] }}" data-lng="{{ $store['lng'] }}">
                                         <h3 class="text-[15px] font-bold text-ink">{{ $store['name'] }}</h3>
+                                        @if (!empty($store['owner_name']))
+                                            <p class="mt-0.5 text-body">Owner: {{ $store['owner_name'] }}</p>
+                                        @endif
                                         <p class="mt-0.5 text-body">{{ $store['address'] }}</p>
-                                        <p class="mt-0.5 font-medium text-brand">Phone: {{ $store['phone'] }}</p>
+                                        @php
+                                            // Some dealers publish two numbers; show whichever exist.
+                                            $numbers = array_filter([$store['phone'] ?? null, $store['phone_two'] ?? null]);
+                                        @endphp
+                                        @if ($numbers)
+                                            <p class="mt-0.5 font-medium text-brand">Phone: {{ implode(' / ', $numbers) }}</p>
+                                        @endif
                                         @if (!empty($store['google_maps_url']))
                                             <a href="{{ $store['google_maps_url'] }}" target="_blank" rel="noopener"
                                                class="mt-1.5 inline-flex items-center gap-1 font-semibold text-ink hover:text-accent"

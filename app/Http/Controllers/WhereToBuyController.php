@@ -45,8 +45,10 @@ class WhereToBuyController extends Controller
                 'stores' => $city->stores->map(fn ($store) => [
                     'id' => $store->id,
                     'name' => $store->name,
+                    'owner_name' => $store->owner_name,
                     'address' => $store->address,
                     'phone' => $store->phone,
+                    'phone_two' => $store->phone_two,
                     'lat' => $store->lat,
                     'lng' => $store->lng,
                     'google_maps_url' => $store->google_maps_url,

@@ -37,6 +37,8 @@ class DatabaseSeeder extends Seeder
             $this->command->info('Admin user already exists — password left unchanged.');
         }
 
-        $this->call(OutletSeeder::class);
+        // The real dealer network. OutletSeeder is the original demo/placeholder
+        // data and is deliberately no longer called.
+        $this->call(DealerSeeder::class);
     }
 }

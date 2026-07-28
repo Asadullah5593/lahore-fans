@@ -14,8 +14,10 @@ class Store extends Model
     protected $fillable = [
         'city_id',
         'name',
+        'owner_name',
         'address',
         'phone',
+        'phone_two',
         'lat',
         'lng',
         'google_maps_url',
