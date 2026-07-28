@@ -40,6 +40,11 @@ return [
     'catalogue_url' => 'https://lahorefan.com/wp-content/uploads/2025/02/LAHORE-FAN-PDF-2025.pdf',
     'ravian_url' => 'https://ravianfan.com/',
 
+    // The desktop "Shop" nav item is only a dropdown toggle (url '#' below), but
+    // the mobile drawer's Shop row links through to the real shop page like the
+    // live site does.
+    'shop_url' => 'https://lahorefan.com/shop/',
+
     // Primary navigation — mirrors the lahorefan.com header menu exactly.
     // A "children" key renders a dropdown (the Shop mega-menu).
     'nav' => [

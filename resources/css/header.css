@@ -314,7 +314,10 @@
 
 /* ===== Navigation drawer ===== */
 .lf-offcanvas {
-    --bs-offcanvas-width: min(40px, 85vw);
+    /* Bootstrap's default drawer width, capped so it never swallows the whole
+       screen on a narrow phone. (This read `min(40px, 85vw)` — a dropped zero —
+       which pinned the drawer to a 40px sliver on every device.) */
+    --bs-offcanvas-width: min(400px, 85vw);
 }
 
 .lf-offcanvas-header {
