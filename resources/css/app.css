@@ -1,0 +1,104 @@
+/* Header/footer chrome from the lf_design reference project. Bootstrap and its
+   icons power that markup; header.css / footer.css are the design stylesheets.
+   Imported before the Tailwind layers so Preflight keeps governing the base
+   element styles on the rest of the site. (The design project uses Tailwind v4
+   syntax; this project builds with Tailwind v3 + PostCSS, hence @tailwind
+   directives instead of @import "tailwindcss".) */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import './header.css';
+@import './footer.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+    }
+
+    body {
+        @apply font-sans text-[14px] leading-[1.7] text-body bg-white;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-sans font-semibold leading-tight text-ink;
+    }
+
+    /* Lahore Fan link behaviour: smooth colour transitions on hover. */
+    a {
+        @apply transition-colors duration-300;
+    }
+
+    ::selection {
+        @apply bg-accent text-white;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+@layer components {
+    /* Boxed container matching the site's 1300px content width. */
+    .lf-container {
+        @apply mx-auto w-full max-w-container px-4 sm:px-[15px];
+    }
+
+    /* Inner-page banner: solid dark on mobile, cover photo on desktop
+       (mirrors lahorefan.com's inner-page hero behaviour). */
+    .page-banner {
+        background-color: #0c0c0c;
+    }
+
+    @media (min-width: 1024px) {
+        .page-banner {
+            background-image: url('/images/page-banner.jpg');
+            background-position: center;
+            background-size: cover;
+        }
+    }
+
+    /* Outlet cards of the visitor's own city (toggled by where-to-buy.js
+       after geolocation). Doubled class beats the bg utility on the card. */
+    .store-card.store-card--near {
+        @apply border-brand bg-brand-light;
+    }
+
+    /* Scroll-reveal for the outlet list: fade-up as elements enter the
+       viewport. The class is added by where-to-buy.js, so nothing is ever
+       hidden when scripts don't run. */
+    .wtb-reveal {
+        opacity: 0;
+        transform: translateY(14px);
+        transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .wtb-reveal.is-visible {
+        opacity: 1;
+        transform: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .wtb-reveal {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+    }
+
+    /* Green pill CTA — the site's primary button shape. */
+    .lf-btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-[20px] bg-brand px-5 py-2.5
+               text-sm font-semibold text-white transition-colors duration-300
+               hover:bg-brand-dark hover:text-white focus:outline-none focus-visible:ring-2
+               focus-visible:ring-brand focus-visible:ring-offset-2;
+    }
+}

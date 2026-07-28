@@ -1,0 +1,199 @@
+.lf-footer {
+    --lf-green: #008242;
+    --lf-accent: #008242;
+    --lf-bg: #121212;
+    --lf-bg-bottom: #1a1a1a;
+    font-family:
+        "Manrope",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+    background: var(--lf-bg);
+    color: #fff;
+}
+.lf-footer * {
+    box-sizing: border-box;
+}
+
+.lf-footer__main {
+    padding: 30px 20px 0;
+}
+.lf-footer__container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0 32px;
+}
+
+.lf-footer__logo {
+    display: inline-flex;
+    margin-bottom: 18px;
+}
+.lf-footer__logo img {
+    display: block;
+    height: 35px;
+    width: auto;
+}
+.lf-footer__desc {
+    margin: 0 0 20px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 30px;
+}
+.lf-footer__call {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.lf-footer__call-icon {
+    width: 45px;
+    height: 45px;
+    flex: none;
+    color: var(--lf-green);
+}
+.lf-footer__call-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 2px;
+    text-decoration: none;
+}
+.lf-footer__call-number {
+    display: block;
+    color: var(--lf-green);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.lf-footer__title {
+    margin: 0 0 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+.lf-footer__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.lf-footer__links li:not(:last-child) {
+    margin-bottom: 10px;
+}
+.lf-footer__links--categories li:not(:last-child) {
+    margin-bottom: 0;
+}
+.lf-footer__links a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 30px;
+}
+.lf-footer__links a:hover {
+    color: var(--lf-accent);
+}
+
+.lf-footer__contact {
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+}
+.lf-footer__contact li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+.lf-footer__contact li + li {
+    margin-top: 8px;
+}
+.lf-footer__contact .lf-icon {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    margin-top: 3px;
+    color: #fff;
+}
+.lf-footer__contact a,
+.lf-footer__contact span {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 2.2;
+}
+.lf-footer__contact a:hover {
+    color: var(--lf-accent);
+}
+
+.lf-footer__social {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    list-style: none;
+    margin: 0 0 0 -5px;
+    padding: 0;
+}
+.lf-footer__social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--lf-green);
+    color: #fff;
+    text-decoration: none;
+}
+.lf-footer__social .lf-icon,
+.lf-footer__social i {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.lf-footer__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.13);
+    background: var(--lf-bg-bottom);
+    padding: 15px 20px 20px;
+    margin-top: 20px;
+}
+.lf-footer__bottom p {
+    max-width: 1300px;
+    margin: 0 auto;
+    /* Centred at every breakpoint, as on lahorefan.com. */
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+}
+
+@media (max-width: 991px) {
+    .lf-footer__container {
+        grid-template-columns: 1fr;
+        row-gap: 40px;
+    }
+}
+
+/* ---- Desktop parity with lahorefan.com (values read from the live site's
+   Elementor CSS). Column widths are 25% / 25% / 22% / 28% with a 25px inset
+   per column (the Useful Links column is indented 95px on the left), and the
+   copyright line is centred. Scoped to desktop only so the mobile layout
+   above is untouched. ---- */
+@media (min-width: 992px) {
+    .lf-footer__container {
+        grid-template-columns: 25% 25% 22% 28%;
+        gap: 0;
+    }
+
+    /* 25px inset on all sides (Elementor: 5px column margin + 20px padding);
+       the vertical inset is what gives the footer its taller feel. */
+    .lf-footer__col {
+        padding: 25px;
+    }
+
+    .lf-footer__col:nth-child(2) {
+        padding-left: 95px;
+    }
+}
