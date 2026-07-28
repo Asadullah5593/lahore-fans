@@ -44,13 +44,23 @@ function buildPopup(store) {
     name.textContent = store.name;
     wrap.appendChild(name);
 
+    if (store.owner_name) {
+        const owner = document.createElement('div');
+        owner.textContent = `Owner: ${store.owner_name}`;
+        wrap.appendChild(owner);
+    }
+
     const addr = document.createElement('div');
     addr.textContent = store.address;
     wrap.appendChild(addr);
 
-    const phone = document.createElement('div');
-    phone.textContent = `Phone: ${store.phone}`;
-    wrap.appendChild(phone);
+    // Dealers may list a second number; a dealer with none shows no phone line.
+    const numbers = [store.phone, store.phone_two].filter(Boolean);
+    if (numbers.length) {
+        const phone = document.createElement('div');
+        phone.textContent = `Phone: ${numbers.join(' / ')}`;
+        wrap.appendChild(phone);
+    }
 
     if (store.google_maps_url) {
         const link = document.createElement('a');

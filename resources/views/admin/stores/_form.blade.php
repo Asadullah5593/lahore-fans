@@ -28,6 +28,12 @@
             </div>
 
             <div>
+                <label for="owner_name" class="mb-1 block text-sm font-semibold text-ink">Owner <span class="font-normal text-body">(optional)</span></label>
+                <input id="owner_name" name="owner_name" type="text" value="{{ old('owner_name', $store->owner_name) }}" class="{{ $inputClass }}">
+                <p class="mt-1 text-xs text-body">Shown on the outlet card as “Owner: …”. Leave blank to hide it.</p>
+            </div>
+
+            <div>
                 <label for="city_id" class="mb-1 block text-sm font-semibold text-ink">City</label>
                 <select id="city_id" name="city_id" class="{{ $inputClass }}" required>
                     <option value="">— Select a city —</option>
@@ -45,9 +51,15 @@
                 <input id="address" name="address" type="text" value="{{ old('address', $store->address) }}" class="{{ $inputClass }}" required>
             </div>
 
-            <div>
-                <label for="phone" class="mb-1 block text-sm font-semibold text-ink">Phone</label>
-                <input id="phone" name="phone" type="text" value="{{ old('phone', $store->phone) }}" class="{{ $inputClass }}" required>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="phone" class="mb-1 block text-sm font-semibold text-ink">Phone</label>
+                    <input id="phone" name="phone" type="text" value="{{ old('phone', $store->phone) }}" class="{{ $inputClass }}" required>
+                </div>
+                <div>
+                    <label for="phone_two" class="mb-1 block text-sm font-semibold text-ink">Second phone <span class="font-normal text-body">(optional)</span></label>
+                    <input id="phone_two" name="phone_two" type="text" value="{{ old('phone_two', $store->phone_two) }}" class="{{ $inputClass }}">
+                </div>
             </div>
 
             <div>

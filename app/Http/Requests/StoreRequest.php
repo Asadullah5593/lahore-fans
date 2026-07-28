@@ -20,8 +20,10 @@ class StoreRequest extends FormRequest
         return [
             'city_id' => ['required', 'exists:cities,id'],
             'name' => ['required', 'string', 'max:255'],
+            'owner_name' => ['nullable', 'string', 'max:255'],
             'address' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:50'],
+            'phone_two' => ['nullable', 'string', 'max:50'],
             'lat' => ['required', 'numeric', 'between:-90,90'],
             'lng' => ['required', 'numeric', 'between:-180,180'],
             'google_maps_url' => ['nullable', 'url', 'max:255'],
