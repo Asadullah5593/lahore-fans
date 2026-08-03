@@ -5,14 +5,23 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CityRequest;
 use App\Models\City;
+use Illuminate\Http\Request;
 
 class CityController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cities = City::withCount('stores')->ordered()->paginate(20);
+        $q = trim((string) $request->query('q', ''));
 
-        return view('admin.cities.index', compact('cities'));
+        $cities = City::withCount('stores')
+            ->when($q !== '', fn ($query) => $query->where(
+                'name', 'like', '%'.str_replace(['%', '_'], ['\\%', '\\_'], $q).'%'
+            ))
+            ->ordered()
+            ->paginate(20)
+            ->withQueryString();
+
+        return view('admin.cities.index', ['cities' => $cities, 'q' => $q]);
     }
 
     public function create()

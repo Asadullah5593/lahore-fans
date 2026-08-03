@@ -45,7 +45,8 @@ class WhereToBuyTest extends TestCase
         $this->get('/')
             ->assertOk()
             ->assertSee('Lahore')
-            ->assertSee('Active Dealer');
+            // Dealer names render in caps on the public page.
+            ->assertSee('ACTIVE DEALER');
     }
 
     public function test_public_page_hides_inactive_stores_and_empty_cities(): void
@@ -97,7 +98,7 @@ class WhereToBuyTest extends TestCase
 
         $this->assertDatabaseHas('stores', ['name' => 'Brand New Dealer']);
         // Observer should have flushed the cache — new dealer appears immediately.
-        $this->get('/')->assertSee('Brand New Dealer');
+        $this->get('/')->assertSee('BRAND NEW DEALER');
     }
 
     public function test_store_validation_rejects_out_of_range_coordinates(): void

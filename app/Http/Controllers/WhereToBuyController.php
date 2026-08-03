@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 
 class WhereToBuyController extends Controller
 {
@@ -44,8 +45,11 @@ class WhereToBuyController extends Controller
                 'zoom' => $city->zoom,
                 'stores' => $city->stores->map(fn ($store) => [
                     'id' => $store->id,
-                    'name' => $store->name,
-                    'owner_name' => $store->owner_name,
+                    // Dealer names are shown in caps on the public page. Upper-casing
+                    // here means the cards and the map popups can never disagree.
+                    'name' => Str::upper($store->name),
+                    'owner_name' => $store->owner_name ? Str::upper($store->owner_name) : null,
+                    'is_featured' => $store->is_featured,
                     'address' => $store->address,
                     'phone' => $store->phone,
                     'phone_two' => $store->phone_two,

@@ -28,6 +28,7 @@ class StoreRequest extends FormRequest
             'lng' => ['required', 'numeric', 'between:-180,180'],
             'google_maps_url' => ['nullable', 'url', 'max:255'],
             'is_active' => ['boolean'],
+            'is_featured' => ['boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
         ];
     }
@@ -36,6 +37,7 @@ class StoreRequest extends FormRequest
     {
         $this->merge([
             'is_active' => $this->boolean('is_active'),
+            'is_featured' => $this->boolean('is_featured'),
         ]);
 
         // sort_order is no longer part of the form. Only normalise it when it is

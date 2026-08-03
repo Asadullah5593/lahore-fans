@@ -74,6 +74,12 @@
                     <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $store->is_active)) class="rounded border-line text-brand focus:ring-brand">
                     Active (visible on the public page)
                 </label>
+
+                <label class="flex items-center gap-2 text-sm font-semibold text-ink" title="Starred dealers show a green card and lead their city">
+                    <input type="hidden" name="is_featured" value="0">
+                    <input type="checkbox" name="is_featured" value="1" @checked(old('is_featured', $store->is_featured)) class="rounded border-line text-brand focus:ring-brand">
+                    <span class="text-accent" aria-hidden="true">&#9733;</span> Featured
+                </label>
                 {{-- Sort order is hidden from the form. Existing values are kept as-is;
                      new outlets default to 0 and fall back to alphabetical ordering.
                 <div>

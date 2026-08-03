@@ -22,6 +22,7 @@ class Store extends Model
         'lng',
         'google_maps_url',
         'is_active',
+        'is_featured',
         'sort_order',
     ];
 
@@ -31,6 +32,7 @@ class Store extends Model
             'lat' => 'float',
             'lng' => 'float',
             'is_active' => 'boolean',
+            'is_featured' => 'boolean',
             'sort_order' => 'integer',
         ];
     }
@@ -45,8 +47,14 @@ class Store extends Model
         return $query->where('is_active', true);
     }
 
+    /** Starred dealers lead their city group, then the configured order. */
     public function scopeOrdered(Builder $query): Builder
     {
-        return $query->orderBy('sort_order')->orderBy('name');
+        return $query->orderByDesc('is_featured')->orderBy('sort_order')->orderBy('name');
+    }
+
+    public function scopeFeatured(Builder $query): Builder
+    {
+        return $query->where('is_featured', true);
     }
 }
