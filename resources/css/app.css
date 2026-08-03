@@ -72,6 +72,60 @@
         @apply border-brand bg-brand-light;
     }
 
+    /* Starred dealers. Green where the rest are grey, with a slightly heavier
+       border and a resting shadow so they read as raised even before hover. */
+    .store-card--featured {
+        @apply border-brand bg-brand-light;
+        border-width: 2px;
+        box-shadow: 0 1px 10px rgb(22 168 107 / 0.18);
+    }
+
+    .store-card--featured:hover {
+        box-shadow: 0 6px 20px rgb(22 168 107 / 0.28);
+    }
+
+    /* The badge settles in on load, then the star breathes gently so the eye is
+       drawn to it without the card ever moving. */
+    .store-card__star {
+        animation: lf-badge-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .store-card__star > span {
+        display: inline-block;
+        animation: lf-star-pulse 2.6s ease-in-out 0.6s infinite;
+    }
+
+    @keyframes lf-badge-in {
+        from {
+            opacity: 0;
+            transform: scale(0.6) translateY(-2px);
+        }
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    @keyframes lf-star-pulse {
+        0%, 70%, 100% {
+            transform: scale(1);
+        }
+        80% {
+            transform: scale(1.28) rotate(-8deg);
+        }
+        90% {
+            transform: scale(1.12) rotate(4deg);
+        }
+    }
+
+    /* Anything motion-sensitive gets the styling without the movement. */
+    @media (prefers-reduced-motion: reduce) {
+        .store-card__star,
+        .store-card__star > span {
+            animation: none;
+        }
+    }
+
     /* Scroll-reveal for the outlet list: fade-up as elements enter the
        viewport. The class is added by where-to-buy.js, so nothing is ever
        hidden when scripts don't run. */

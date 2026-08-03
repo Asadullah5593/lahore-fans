@@ -61,9 +61,22 @@
                             </h2>
                             <div class="space-y-3">
                                 @foreach ($city['stores'] as $store)
-                                    <article class="store-card cursor-pointer rounded-lg border border-line bg-gray-50 px-4 py-3 leading-snug transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card"
+                                    @php $featured = ! empty($store['is_featured']); @endphp
+                                    <article @class([
+                                                'store-card cursor-pointer rounded-lg border px-4 py-3 leading-snug transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card',
+                                                'border-line bg-gray-50' => ! $featured,
+                                                'store-card--featured' => $featured,
+                                             ])
                                              data-store-id="{{ $store['id'] }}" data-lat="{{ $store['lat'] }}" data-lng="{{ $store['lng'] }}">
-                                        <h3 class="text-[15px] font-bold text-ink">{{ $store['name'] }}</h3>
+                                        <div class="flex items-start justify-between gap-3">
+                                            <h3 class="text-[15px] font-bold text-ink">{{ $store['name'] }}</h3>
+                                            @if ($featured)
+                                                <span class="store-card__star shrink-0 rounded-full bg-brand px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-white"
+                                                      title="Featured dealer">
+                                                    <span aria-hidden="true">&#9733;</span> Featured
+                                                </span>
+                                            @endif
+                                        </div>
                                         @if (!empty($store['owner_name']))
                                             <p class="mt-0.5 text-body">Owner: {{ $store['owner_name'] }}</p>
                                         @endif
@@ -79,7 +92,8 @@
                                             <a href="{{ $store['google_maps_url'] }}" target="_blank" rel="noopener"
                                                class="mt-1.5 inline-flex items-center gap-1 font-semibold text-ink hover:text-accent"
                                                onclick="event.stopPropagation();">
-                                                See more <span aria-hidden="true">&rarr;</span>
+                                                {{-- <span aria-hidden="true">&#128205;</span> --}}
+                                                Open in Google Maps <span aria-hidden="true">&rarr;</span>
                                             </a>
                                         @endif
                                     </article>

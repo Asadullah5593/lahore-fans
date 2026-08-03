@@ -41,7 +41,8 @@ function buildPopup(store) {
     wrap.className = 'text-sm';
 
     const name = document.createElement('strong');
-    name.textContent = store.name;
+    // A starred dealer is marked in the popup too, so the map and the list agree.
+    name.textContent = store.is_featured ? `\u2605 ${store.name}` : store.name;
     wrap.appendChild(name);
 
     if (store.owner_name) {
@@ -67,7 +68,7 @@ function buildPopup(store) {
         link.href = store.google_maps_url;
         link.target = '_blank';
         link.rel = 'noopener';
-        link.textContent = 'See more →';
+        link.textContent = 'Open in Google Maps →';
         link.style.color = BRAND_GREEN;
         link.style.fontWeight = '600';
         wrap.appendChild(link);

@@ -9,6 +9,8 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/where-to-buy.js',
                 'resources/js/admin-map.js',
+                'resources/css/admin.css',
+                'resources/js/admin-ui.js',
             ],
             refresh: true,
         }),

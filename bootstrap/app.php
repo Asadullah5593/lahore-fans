@@ -11,7 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // cPanel/LiteSpeed terminates TLS in front of PHP, so without this
+        // Laravel sees plain HTTP and builds http:// redirect URLs. The browser
+        // then bounces http -> https, and the session cookie (which is marked
+        // Secure) is not sent on that hop — so flashed success messages are lost
+        // between the POST and the page it redirects to.
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

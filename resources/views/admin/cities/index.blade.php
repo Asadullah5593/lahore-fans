@@ -11,6 +11,21 @@
         <a href="{{ route('admin.cities.create') }}" class="lf-btn">+ Add city</a>
     </div>
 
+    <form method="GET" action="{{ route('admin.cities.index') }}" data-loading-form
+          class="mb-4 flex flex-wrap items-end gap-3 rounded-lg border border-line bg-white p-4 shadow-sm">
+        <div class="min-w-[220px] flex-1">
+            <label for="f-city-q" class="mb-1 block text-xs font-semibold uppercase tracking-wide text-body">Search</label>
+            <input id="f-city-q" name="q" type="search" value="{{ $q }}" placeholder="City name"
+                   class="w-full rounded border-line text-sm focus:border-brand focus:ring-brand">
+        </div>
+        <button type="submit" class="lf-btn py-2 text-sm">Search</button>
+        @if ($q !== '')
+            <a href="{{ route('admin.cities.index') }}"
+               class="rounded border border-line px-4 py-2 text-sm font-semibold text-ink hover:border-brand hover:text-brand">Clear</a>
+            <span class="text-sm text-body">{{ $cities->total() }} match{{ $cities->total() === 1 ? '' : 'es' }}</span>
+        @endif
+    </form>
+
     <div class="overflow-hidden rounded-lg border border-line bg-white shadow-sm">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-line text-sm">
