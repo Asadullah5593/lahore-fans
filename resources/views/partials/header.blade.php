@@ -64,12 +64,9 @@
                             <a class="nav-link active" href="{{ $nav['Home']['url'] }}">Home</a>
                         </li>
                         <li class="nav-item lf-dropdown">
-                            {{-- Like lahorefan.com: Shop is only a hover toggle for the
-                                 dropdown — there is no shop page, clicking does nothing.
-                                 A mouse click also blurs the link (event.detail is 0 for
-                                 keyboard "clicks"), otherwise :focus-within would hold
-                                 the dropdown open after the cursor leaves. --}}
-                            <a class="nav-link lf-dropdown-toggle" href="#" onclick="if (event.detail) this.blur(); return false;">
+                            {{-- Like lahorefan.com: hovering Shop opens the category
+                                 dropdown, clicking it goes to the shop page. --}}
+                            <a class="nav-link lf-dropdown-toggle" href="{{ $nav['Shop']['url'] }}">
                                 Shop <i class="bi bi-chevron-down" style="margin-top: 5px;"></i>
                             </a>
                             <ul class="lf-dropdown-menu">
@@ -99,9 +96,11 @@
                     </ul>
                 </div>
 
+                {{-- Same two buttons, in the same order, as the lahorefan.com header.
+                     "Dealers Location" is this app, so it links to our own home page. --}}
                 <div class="lf-cta-group">
+                    <a href="{{ route('where-to-buy') }}" class="btn btn-lf-solid">Dealers Location</a>
                     <a href="{{ config('brand.ravian_url') }}" target="_blank" rel="noopener" class="btn btn-lf-solid">Ravian</a>
-                    <a href="{{ config('brand.catalogue_url') }}" target="_blank" rel="noopener" class="btn btn-lf-solid">Catalogue</a>
                 </div>
             </div>
         </nav>
@@ -133,7 +132,7 @@
                                 <li class="lf-drawer-item">
                                     {{-- JS intercepts this to slide the Shop panel in; the
                                          href is the no-JS fallback. --}}
-                                    <a href="{{ config('brand.shop_url') }}" data-open-panel="shop">Shop <i
+                                    <a href="{{ $nav['Shop']['url'] }}" data-open-panel="shop">Shop <i
                                             class="bi bi-chevron-right"></i></a>
                                 </li>
                                 <li class="lf-drawer-item">
@@ -144,6 +143,9 @@
                                 </li>
                                 <li class="lf-drawer-item">
                                     <a href="{{ $nav['FAQs']['url'] }}">FAQs</a>
+                                </li>
+                                <li class="lf-drawer-item">
+                                    <a href="{{ route('where-to-buy') }}">Dealers Location</a>
                                 </li>
                                 <li class="lf-drawer-item">
                                     <a href="{{ config('brand.ravian_url') }}" target="_blank" rel="noopener">Ravian</a>

@@ -67,9 +67,8 @@
                                 <path fill="currentColor"
                                     d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z" />
                             </svg>
-                            {{-- Opens the Google Maps pin, as on lahorefan.com.
-                                 `.lf-footer__contact a:hover` already tints it green. --}}
-                            <a href="{{ config('brand.address_map_url') }}" target="_blank" rel="noopener">LAHORE FANS, Kotli pir-ahmad,<br>NH 5, Kotli Pir Ahmed Shah,<br>Gujranwala, Punjab</a>
+                            {{-- Plain text, as on lahorefan.com (the live footer address is not a link). --}}
+                            <span>{{ config('brand.address') }}</span>
                         </li>
                     </ul>
                     <ul class="lf-footer__social">
